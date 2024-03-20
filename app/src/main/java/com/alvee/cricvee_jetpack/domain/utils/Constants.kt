@@ -3,7 +3,7 @@ package com.alvee.cricvee_jetpack.domain.utils
 class Constants {
     companion object {
         const val BASE_URL = "https://cricket.sportmonks.com/api/v2.0/"
-        const val API_KEY = "dk2eWyJAQmtLKQxD1R2Dq3tLzvfkWNFtqDGAzcfZlNxD9PTHLsTvJzgkVE1V"
+
         const val MENS = "Men's"
         const val WOMENS = "Women's"
         const val WOMEN_ATTRIBUTE_VALUE = "women"
@@ -60,6 +60,7 @@ class Constants {
         const val APP_NOTIFICATION_CHANNEL_NAME = "CricVee Match Notification"
         const val APP_NOTIFICATION_CHANNEL_CONTENT = "A match is about to start in a few minutes!"
         const val INNINGS = " Innings"
+
 
         val battingParameters = listOf(
             "Matches", "Innings", "Runs",

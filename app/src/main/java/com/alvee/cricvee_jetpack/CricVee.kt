@@ -5,7 +5,7 @@ import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
 
 
-
+@HiltAndroidApp
 class CricVee : Application(){
     private val TAG = "CricVee"
     override fun onCreate() {
