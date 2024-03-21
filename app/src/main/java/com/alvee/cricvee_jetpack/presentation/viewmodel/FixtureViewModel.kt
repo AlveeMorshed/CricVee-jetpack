@@ -26,7 +26,7 @@ class FixtureViewModel @Inject constructor(
     init {
         try {
             fetchTrendingFixtures()
-            //showRecentMatchesFromDB()
+            showRecentMatchesFromDB()
         }catch (e: Exception){
             e.printStackTrace()
         }
@@ -45,7 +45,7 @@ class FixtureViewModel @Inject constructor(
         fixtureJob?.cancel()
         fixtureJob = viewModelScope.launch(Dispatchers.IO) {
             fixtureUseCase.getRecentMatchesUseCase().collect{
-                _state.value = state.value.copy(matchList = it)
+                _state.value = _state.value.copy(matchList = it)
             }
         }
         Log.d(TAG, "showRecentMatchesFromDB: Retrieve from DB successful")

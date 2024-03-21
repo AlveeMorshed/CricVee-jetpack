@@ -25,11 +25,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.alvee.cricvee_jetpack.R
+import com.alvee.cricvee_jetpack.domain.utils.Constants
 import com.alvee.cricvee_jetpack.presentation.ui.theme.DarkViolet
+import com.moinul.cricvee.model.fixtures.FixtureData
 
 @Composable
 fun MatchCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    match: FixtureData,
 ) {
     ElevatedCard(
         modifier = modifier
@@ -40,7 +43,7 @@ fun MatchCard(
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
-        shape = RoundedCornerShape(corner = CornerSize(14.dp))
+        shape = RoundedCornerShape(corner = CornerSize(14.dp)),
     ) {
         Row(
             modifier = Modifier
@@ -49,6 +52,7 @@ fun MatchCard(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Image(
                 modifier = Modifier
                     .size(19.dp),
@@ -65,10 +69,12 @@ fun MatchCard(
             )
         }
 
-        MatchScores()
+        MatchScores(
+            fixtureData = match
+        )
 
         Text(
-            text = stringResource(id = R.string.demo_string),
+            text = match.starting_at.toString(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
@@ -76,7 +82,11 @@ fun MatchCard(
         )
 
         Text(
-            text = stringResource(id = R.string.demo_string),
+            text = if (match.status != Constants.NOT_STARTED) {
+                match.note.toString()
+            } else {
+                Constants.YET_TO_START
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(DarkViolet)

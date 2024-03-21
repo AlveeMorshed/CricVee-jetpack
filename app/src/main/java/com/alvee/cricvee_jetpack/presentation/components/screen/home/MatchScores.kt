@@ -13,10 +13,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.alvee.cricvee_jetpack.R
+import com.moinul.cricvee.model.fixtures.FixtureData
 
 @Composable
 fun MatchScores(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    fixtureData: FixtureData,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
