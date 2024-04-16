@@ -19,10 +19,10 @@ fun TeamScore(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.demo_string),
+            text = stringResource(id = R.string.runs_wickets),
         )
         Text(
-            text = stringResource(id = R.string.demo_string),
+            text = stringResource(id = R.string.overs),
         )
     }
 }

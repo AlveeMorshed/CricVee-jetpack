@@ -5,4 +5,8 @@
     <string name="team_1_image">team 1 image</string>
     <string name="league_image">league image</string>
     <string name="vs">VS</string>
+    <string name="league_name">League Name</string>
+    <string name="round">Semi-Final</string>
+    <string name="runs_wickets">888/10</string>
+    <string name="overs">88.8</string>
 </resources>

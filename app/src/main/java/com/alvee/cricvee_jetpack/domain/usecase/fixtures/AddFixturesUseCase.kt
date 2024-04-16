@@ -14,6 +14,5 @@ class AddFixturesUseCase(
         if(fixtureList.isNotEmpty()){
             return repo.insertAllFixtures(fixtureList)
         }
-//        return repo.insertAllFixtures(fixtureList)
     }
 }

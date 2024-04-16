@@ -57,7 +57,7 @@ fun HomeScreen(
                         items = state.matchList
                     ) {
                         MatchCard(
-                            Modifier.fillParentMaxWidth(0.94f),
+                            Modifier.fillParentMaxWidth(0.95f),
                             match = it
                         )
                         recentMatchesLoading.value = false

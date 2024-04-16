@@ -61,13 +61,14 @@ fun MatchCard(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = stringResource(R.string.demo_string),
+                text = stringResource(R.string.league_name),
                 modifier = Modifier,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.finishedStatusColor),
                 textAlign = TextAlign.Center
             )
         }
+
 
         MatchScores(
             fixtureData = match

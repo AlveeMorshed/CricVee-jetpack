@@ -15,8 +15,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
+
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
@@ -24,11 +24,11 @@ object UseCaseModule {
     @Singleton
     fun provideFixtureUseCase(
         repo: FixtureRepository,
-        apiRepo:ApiRepository
+        apiRepo: ApiRepository,
     ): FixtureUseCase {
         return FixtureUseCase(
             addFixturesUseCase = AddFixturesUseCase(repo = repo, apiRepo = apiRepo),
-            getRecentMatchesUseCase = GetRecentMatchesUseCase(repo),
+            getRecentMatchesUseCase = GetRecentMatchesUseCase(repo)
         )
     }
 
