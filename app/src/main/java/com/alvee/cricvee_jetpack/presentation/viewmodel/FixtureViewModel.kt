@@ -36,7 +36,12 @@ class FixtureViewModel @Inject constructor(
         Log.d(TAG, "fetchTrendingFixtures: Fetch started")
         fixtureJob?.cancel()
         fixtureJob = viewModelScope.launch(Dispatchers.IO) {
-            fixtureUseCase.addFixturesUseCase()
+            try {
+                fixtureUseCase.addFixturesUseCase()
+            } catch (e: Exception) {
+                Log.d(TAG, "fetchTrendingFixtures: Exception khaisi \t ${e.message}")
+            }
+
         }
         Log.d(TAG, "fetchTrendingFixtures: Fetch successful")
     }
