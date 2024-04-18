@@ -3,10 +3,13 @@ package com.alvee.cricvee_jetpack.di
 import com.alvee.cricvee_jetpack.data.db.api.ApiConstants
 import com.alvee.cricvee_jetpack.data.db.api.SportsApiService
 import com.alvee.cricvee_jetpack.domain.repository.FixtureRepository
+import com.alvee.cricvee_jetpack.domain.repository.TeamRepository
 import com.alvee.cricvee_jetpack.domain.repository.remote.ApiRepository
 import com.alvee.cricvee_jetpack.domain.usecase.fixtures.AddFixturesUseCase
 import com.alvee.cricvee_jetpack.domain.usecase.fixtures.FixtureUseCase
 import com.alvee.cricvee_jetpack.domain.usecase.fixtures.GetRecentMatchesUseCase
+import com.alvee.cricvee_jetpack.domain.usecase.teams.AddAllTeamsUseCase
+import com.alvee.cricvee_jetpack.domain.usecase.teams.TeamsUseCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -34,7 +37,18 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit{
+    fun provideTeamsUseCase(
+        repo: TeamRepository,
+        apiRepo: ApiRepository,
+    ): TeamsUseCase {
+        return TeamsUseCase(
+            addAllTeamsUseCase = AddAllTeamsUseCase(repo = repo, apiRepo = apiRepo)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit {
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -43,7 +57,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): SportsApiService{
+    fun provideApiService(retrofit: Retrofit): SportsApiService {
         return retrofit.create(SportsApiService::class.java)
     }
 }

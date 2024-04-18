@@ -31,8 +31,10 @@ import com.alvee.cricvee_jetpack.presentation.viewmodel.FixtureViewModel
 fun HomeScreen(
     modifier: Modifier = Modifier,
     fixtureViewModel: FixtureViewModel = hiltViewModel(),
+    //teamViewModel: TeamViewModel = hiltViewModel(),
 ) {
-    val state by fixtureViewModel.state.collectAsState()
+    val fixtureState by fixtureViewModel.state.collectAsState()
+    //val teamsState by teamViewModel.state.collectAsState()
     var recentMatchesLoading: MutableState<Boolean> = remember { mutableStateOf(true) }
     Box(
         modifier = modifier.fillMaxSize(),
@@ -54,7 +56,7 @@ fun HomeScreen(
             {
                 LazyRow {
                     items(
-                        items = state.matchList
+                        items = fixtureState.matchList
                     ) {
                         MatchCard(
                             Modifier.fillParentMaxWidth(0.95f),

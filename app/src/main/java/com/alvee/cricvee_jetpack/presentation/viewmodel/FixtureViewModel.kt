@@ -46,8 +46,10 @@ class FixtureViewModel @Inject constructor(
         fixtureJob = viewModelScope.launch(Dispatchers.IO) {
             fixtureUseCase.getRecentMatchesUseCase().collect{
                 _state.value = _state.value.copy(matchList = it)
+
             }
         }
+        Log.d(TAG, "showRecentMatchesFromDB: " + state.value.matchList.size)
         Log.d(TAG, "showRecentMatchesFromDB: Retrieve from DB successful")
     }
 

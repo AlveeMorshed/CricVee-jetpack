@@ -5,16 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.alvee.cricvee_jetpack.data.db.dao.FixtureDao
+import com.alvee.cricvee_jetpack.data.db.dao.TeamDao
+import com.alvee.cricvee_jetpack.data.db.model.teams.TeamData
 import com.alvee.cricvee_jetpack.domain.utils.Constants
 import com.moinul.cricvee.model.fixtures.FixtureData
 
 @Database(
-    entities = [FixtureData::class],
-    version = 1,
+    entities = [FixtureData::class, TeamData::class],
+    version = 2,
     exportSchema = false
 )
 abstract class LocalDatabase : RoomDatabase() {
     abstract val fixtureDao: FixtureDao
+    abstract val teamDao: TeamDao
 
     companion object{
         @Volatile
