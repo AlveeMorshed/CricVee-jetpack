@@ -1,5 +1,6 @@
 package com.alvee.cricvee_jetpack.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alvee.cricvee_jetpack.domain.usecase.teams.TeamsUseCase
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "TeamViewModel"
 @HiltViewModel
 class TeamViewModel @Inject constructor(
     private val teamsUseCase: TeamsUseCase,
@@ -19,18 +21,20 @@ class TeamViewModel @Inject constructor(
     private val _state = MutableStateFlow(TeamsState())
     val state = _state.asStateFlow()
     private var teamJob: Job? = null
-    /*init {
+
+    init {
         try {
             fetchAllTeams()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-    }*/
+    }
 
     fun fetchAllTeams() {
         teamJob?.cancel()
         teamJob = viewModelScope.launch(Dispatchers.IO) {
-            //teamsUseCase.addAllTeamsUseCase()
+            teamsUseCase.addAllTeamsUseCase()
+            Log.d(TAG, "fetchAllTeams: DID I DIE??")
         }
     }
 }

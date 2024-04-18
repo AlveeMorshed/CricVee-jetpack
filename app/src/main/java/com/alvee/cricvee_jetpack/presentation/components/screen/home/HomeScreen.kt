@@ -1,5 +1,6 @@
 package com.alvee.cricvee_jetpack.presentation.components.screen.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,17 +26,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.alvee.cricvee_jetpack.R
 import com.alvee.cricvee_jetpack.presentation.components.IndeterminateCircularIndicator
 import com.alvee.cricvee_jetpack.presentation.viewmodel.FixtureViewModel
+import com.alvee.cricvee_jetpack.presentation.viewmodel.TeamViewModel
 
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     fixtureViewModel: FixtureViewModel = hiltViewModel(),
-    //teamViewModel: TeamViewModel = hiltViewModel(),
+    teamViewModel: TeamViewModel = hiltViewModel(),
 ) {
     val fixtureState by fixtureViewModel.state.collectAsState()
-    //val teamsState by teamViewModel.state.collectAsState()
+    val teamsState by teamViewModel.state.collectAsState()
     var recentMatchesLoading: MutableState<Boolean> = remember { mutableStateOf(true) }
+    Log.d("tag", "vai recompose hocche")
+//    fixtureViewModel.fetchTrendingFixtures()
+//    fixtureViewModel.showRecentMatchesFromDB()
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter,

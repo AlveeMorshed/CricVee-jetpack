@@ -22,31 +22,24 @@ class FixtureViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var fixtureJob: Job? = null
-
     init {
-        try {
-            fetchTrendingFixtures()
-            showRecentMatchesFromDB()
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
-
+        fetchTrendingFixtures()
+        showRecentMatchesFromDB()
     }
-    fun fetchTrendingFixtures(){
+    fun fetchTrendingFixtures() {
         Log.d(TAG, "fetchTrendingFixtures: Fetch started")
         fixtureJob?.cancel()
         fixtureJob = viewModelScope.launch(Dispatchers.IO) {
             fixtureUseCase.addFixturesUseCase()
         }
-        Log.d(TAG, "fetchTrendingFixtures: Fetch successful")
     }
     fun showRecentMatchesFromDB(){
         Log.d(TAG, "showRecentMatchesFromDB: Retrieve from DB started")
-        fixtureJob?.cancel()
+        //fixtureJob?.cancel()
         fixtureJob = viewModelScope.launch(Dispatchers.IO) {
             fixtureUseCase.getRecentMatchesUseCase().collect{
                 _state.value = _state.value.copy(matchList = it)
-
+                Log.d(TAG, "showRecentMatchesFromDB: AM I WORKING???")
             }
         }
         Log.d(TAG, "showRecentMatchesFromDB: " + state.value.matchList.size)
