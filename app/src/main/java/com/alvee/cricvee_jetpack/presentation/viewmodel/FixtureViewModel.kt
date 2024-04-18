@@ -21,40 +21,40 @@ class FixtureViewModel @Inject constructor(
     private val _state = MutableStateFlow(FixtureState())
     val state = _state.asStateFlow()
 
-    private var fixtureJob: Job? = null
+    private var fixtureInsertionJob: Job? = null
+    private var fixtureReadJob: Job? = null
 
     init {
         try {
             fetchTrendingFixtures()
             showRecentMatchesFromDB()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
-    fun fetchTrendingFixtures(){
+    fun fetchTrendingFixtures() {
         Log.d(TAG, "fetchTrendingFixtures: Fetch started")
-        fixtureJob?.cancel()
-        fixtureJob = viewModelScope.launch(Dispatchers.IO) {
+        fixtureInsertionJob?.cancel()
+        fixtureInsertionJob = viewModelScope.launch(Dispatchers.IO) {
             try {
                 fixtureUseCase.addFixturesUseCase()
+
             } catch (e: Exception) {
                 Log.d(TAG, "fetchTrendingFixtures: Exception khaisi \t ${e.message}")
             }
-
         }
         Log.d(TAG, "fetchTrendingFixtures: Fetch successful")
     }
-    fun showRecentMatchesFromDB(){
+
+    private fun showRecentMatchesFromDB() {
         Log.d(TAG, "showRecentMatchesFromDB: Retrieve from DB started")
-        fixtureJob?.cancel()
-        fixtureJob = viewModelScope.launch(Dispatchers.IO) {
-            fixtureUseCase.getRecentMatchesUseCase().collect{
+        fixtureReadJob?.cancel()
+        fixtureReadJob = viewModelScope.launch(Dispatchers.IO) {
+            fixtureUseCase.getRecentMatchesUseCase().collect {
                 _state.value = _state.value.copy(matchList = it)
             }
         }
         Log.d(TAG, "showRecentMatchesFromDB: Retrieve from DB successful")
     }
-
-
 }
