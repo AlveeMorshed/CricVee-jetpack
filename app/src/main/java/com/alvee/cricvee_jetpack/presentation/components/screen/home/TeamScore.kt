@@ -6,23 +6,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.alvee.cricvee_jetpack.R
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun TeamScore(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    score: Int?,
+    wickets: Int?,
+    overs: Double?,
 ) {
     Column(
         modifier = modifier.padding(bottom = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.runs_wickets),
+            text = "$score/$wickets",
         )
         Text(
-            text = stringResource(id = R.string.overs),
+            text = "($overs)",
+            fontSize = 13.75.sp
         )
     }
 }

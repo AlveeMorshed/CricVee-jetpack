@@ -1,14 +1,13 @@
 package com.alvee.cricvee_jetpack.domain.usecase.fixtures
 
 import com.alvee.cricvee_jetpack.domain.repository.FixtureRepository
-import com.alvee.cricvee_jetpack.domain.repository.remote.ApiRepository
-import com.moinul.cricvee.model.fixtures.FixtureData
+import com.moinul.cricvee.model.fixtures.FixtureRunData
 import kotlinx.coroutines.flow.Flow
 
 class GetRecentMatchesUseCase(
     private val repo: FixtureRepository
 ) {
-    suspend operator fun invoke(): Flow<List<FixtureData>> {
+    operator fun invoke(): Flow<List<FixtureRunData>> {
         return repo.readRecentFixtureData()
     }
 }

@@ -15,36 +15,61 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.alvee.cricvee_jetpack.R
-import com.moinul.cricvee.model.fixtures.FixtureData
+import com.alvee.cricvee_jetpack.data.db.model.teams.TeamData
+import com.moinul.cricvee.model.fixtures.FixtureRunData
 
 @Composable
 fun MatchScores(
     modifier: Modifier = Modifier,
-    fixtureData: FixtureData,
+    fixtureRunData: FixtureRunData,
+    localTeamData: TeamData?,
+    visitorTeamData: TeamData?,
+    onLoadingComplete: (Boolean) -> Unit,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        TeamCard()
+        TeamCard(
+            teamData = localTeamData,
+            onLoadingComplete = onLoadingComplete
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = fixtureData.round.toString(),
+                text = fixtureRunData.round.toString(),
             )
             Row {
-                TeamScore()
+                val localTeamResult =
+                    fixtureRunData.runs?.filter { it.team_id == fixtureRunData.localteam_id }
+                        ?.get(0)
+                val visitorTeamResult =
+                    fixtureRunData.runs?.filter { it.team_id == fixtureRunData.visitorteam_id }
+                        ?.get(0)
+                TeamScore(
+                    score = localTeamResult?.score,
+                    wickets = localTeamResult?.wickets,
+                    overs = localTeamResult?.overs
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = stringResource(R.string.vs),
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 2.dp)
+                    modifier = Modifier.padding(top = 8.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                TeamScore()
+                TeamScore(
+                    score = visitorTeamResult?.score,
+                    wickets = visitorTeamResult?.wickets,
+                    overs = visitorTeamResult?.overs
+                )
             }
         }
-        TeamCard()
+        TeamCard(
+            teamData = visitorTeamData,
+            onLoadingComplete = onLoadingComplete
+        )
     }
+
 }

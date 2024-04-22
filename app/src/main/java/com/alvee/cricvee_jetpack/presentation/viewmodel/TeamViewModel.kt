@@ -21,12 +21,13 @@ class TeamViewModel @Inject constructor(
     private val _state = MutableStateFlow(TeamsState())
     val state = _state.asStateFlow()
     private var teamJob: Job? = null
+    private var readTeamJob: Job? = null
 
     init {
         try {
             fetchAllTeams()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.d(TAG, "e: ${e.message}")
         }
     }
 
@@ -34,7 +35,17 @@ class TeamViewModel @Inject constructor(
         teamJob?.cancel()
         teamJob = viewModelScope.launch(Dispatchers.IO) {
             teamsUseCase.addAllTeamsUseCase()
+            teamsUseCase.getAllTeamsUseCase().collect() {
+                _state.value = _state.value.copy(teamsList = it)
+            }
             Log.d(TAG, "fetchAllTeams: DID I DIE??")
         }
     }
+
+    /*fun getTeamData(teamId: Int): {
+        readTeamJob?.cancel()
+        readTeamJob = viewModelScope.launch(Dispatchers.IO) {
+            teamsUseCase.getTeamDataUseCase(teamId)
+        }
+    }*/
 }

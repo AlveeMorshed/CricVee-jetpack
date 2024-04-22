@@ -24,10 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.alvee.cricvee_jetpack.R
+import com.alvee.cricvee_jetpack.data.db.model.teams.TeamData
 import com.alvee.cricvee_jetpack.presentation.components.IndeterminateCircularIndicator
 import com.alvee.cricvee_jetpack.presentation.viewmodel.FixtureViewModel
 import com.alvee.cricvee_jetpack.presentation.viewmodel.TeamViewModel
 
+private const val TAG = "HomeScreen"
 
 @Composable
 fun HomeScreen(
@@ -59,15 +61,29 @@ fun HomeScreen(
                 contentAlignment = Alignment.Center
             )
             {
-                LazyRow {
-                    items(
-                        items = fixtureState.matchList
-                    ) {
-                        MatchCard(
-                            Modifier.fillParentMaxWidth(0.95f),
-                            match = it
-                        )
-                        recentMatchesLoading.value = false
+                if (teamsState.teamsList.isNotEmpty() && fixtureState.matchList.isNotEmpty()) {
+                    LazyRow {
+                        items(
+                            items = fixtureState.matchList
+                        ) {
+                            Log.d(TAG, "HomeScreen: ${teamsState.teamsList.size}")
+                            val localTeamData: TeamData? = teamsState.teamsList.find { teamData ->
+                                teamData.id == it.localteam_id
+                            }
+                            val visitorTeamData: TeamData? = teamsState.teamsList.find { teamData ->
+                                teamData.id == it.visitorteam_id
+                            }
+
+                            Log.d(TAG, "HomeScreen: ${localTeamData?.code}")
+                            Log.d(TAG, "HomeScreen: ${visitorTeamData?.code}")
+                            MatchCard(
+                                Modifier.fillParentMaxWidth(0.95f),
+                                match = it,
+                                localTeamData = localTeamData,
+                                visitorTeamData = visitorTeamData,
+                                onLoadingComplete = { recentMatchesLoading.value = it }
+                            )
+                        }
                     }
                 }
                 IndeterminateCircularIndicator(

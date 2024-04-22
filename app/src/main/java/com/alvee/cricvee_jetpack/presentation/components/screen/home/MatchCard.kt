@@ -25,14 +25,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.alvee.cricvee_jetpack.R
+import com.alvee.cricvee_jetpack.data.db.model.teams.TeamData
 import com.alvee.cricvee_jetpack.domain.utils.Constants
 import com.alvee.cricvee_jetpack.presentation.ui.theme.DarkViolet
-import com.moinul.cricvee.model.fixtures.FixtureData
+import com.moinul.cricvee.model.fixtures.FixtureRunData
 
 @Composable
 fun MatchCard(
     modifier: Modifier = Modifier,
-    match: FixtureData,
+    match: FixtureRunData,
+    localTeamData: TeamData?,
+    visitorTeamData: TeamData?,
+    onLoadingComplete: (Boolean) -> Unit,
 ) {
     ElevatedCard(
         modifier = modifier
@@ -71,7 +75,10 @@ fun MatchCard(
 
 
         MatchScores(
-            fixtureData = match
+            fixtureRunData = match,
+            localTeamData = localTeamData,
+            visitorTeamData = visitorTeamData,
+            onLoadingComplete = onLoadingComplete
         )
 
         Text(

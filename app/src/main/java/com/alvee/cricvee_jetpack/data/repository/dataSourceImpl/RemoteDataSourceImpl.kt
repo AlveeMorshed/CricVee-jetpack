@@ -4,6 +4,7 @@ import com.alvee.cricvee_jetpack.data.db.api.SportsApiService
 import com.alvee.cricvee_jetpack.data.db.model.teams.AllTeams
 import com.alvee.cricvee_jetpack.data.repository.dataSource.remote.RemoteDataSource
 import com.moinul.cricvee.model.fixtures.AllFixtures
+import com.moinul.cricvee.model.fixtures.FixtureWithRun
 
 class RemoteDataSourceImpl(private val apiService: SportsApiService) :RemoteDataSource {
     override suspend fun fetchTrendingFixtures(duration: String): AllFixtures {
@@ -12,5 +13,9 @@ class RemoteDataSourceImpl(private val apiService: SportsApiService) :RemoteData
 
     override suspend fun fetchAllTeams(): AllTeams {
         return apiService.fetchAllTeams()
+    }
+
+    override suspend fun fetchRunsByFixtureId(fixtureId: Int): FixtureWithRun {
+        return apiService.fetchRunsByFixtureId(fixtureId)
     }
 }

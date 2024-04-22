@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "fixture_table")
 data class FixtureData(
     var draw_noresult: String?,
-    @Ignore var elected: String?,
+    var elected: String?,
     var first_umpire_id: Int?,
     var follow_on: Boolean?,
     @PrimaryKey var id: Int,
@@ -38,7 +38,7 @@ data class FixtureData(
     @Ignore var visitorteam_dl_data: VisitorteamDlData?,
     var visitorteam_id: Int?,
     @Ignore var weather_report: List<Any>?,
-    var winner_team_id: Int?
+    var winner_team_id: Int?,
 ) {
     constructor() : this(
         null,

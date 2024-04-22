@@ -7,8 +7,10 @@ import com.alvee.cricvee_jetpack.domain.repository.TeamRepository
 import com.alvee.cricvee_jetpack.domain.repository.remote.ApiRepository
 import com.alvee.cricvee_jetpack.domain.usecase.fixtures.AddFixturesUseCase
 import com.alvee.cricvee_jetpack.domain.usecase.fixtures.FixtureUseCase
+import com.alvee.cricvee_jetpack.domain.usecase.fixtures.GetFixtureRunsUseCase
 import com.alvee.cricvee_jetpack.domain.usecase.fixtures.GetRecentMatchesUseCase
 import com.alvee.cricvee_jetpack.domain.usecase.teams.AddAllTeamsUseCase
+import com.alvee.cricvee_jetpack.domain.usecase.teams.GetAllTeamsUseCase
 import com.alvee.cricvee_jetpack.domain.usecase.teams.TeamsUseCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -31,7 +33,8 @@ object UseCaseModule {
     ): FixtureUseCase {
         return FixtureUseCase(
             addFixturesUseCase = AddFixturesUseCase(repo = repo, apiRepo = apiRepo),
-            getRecentMatchesUseCase = GetRecentMatchesUseCase(repo)
+            getRecentMatchesUseCase = GetRecentMatchesUseCase(repo),
+            getFixtureRunsUseCase = GetFixtureRunsUseCase(apiRepo)
         )
     }
 
@@ -42,7 +45,8 @@ object UseCaseModule {
         apiRepo: ApiRepository,
     ): TeamsUseCase {
         return TeamsUseCase(
-            addAllTeamsUseCase = AddAllTeamsUseCase(repo = repo, apiRepo = apiRepo)
+            addAllTeamsUseCase = AddAllTeamsUseCase(repo = repo, apiRepo = apiRepo),
+            getAllTeamsUseCase = GetAllTeamsUseCase(repo)
         )
     }
 

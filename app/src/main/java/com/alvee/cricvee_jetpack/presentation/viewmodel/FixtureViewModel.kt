@@ -21,12 +21,20 @@ class FixtureViewModel @Inject constructor(
     private val _state = MutableStateFlow(FixtureState())
     val state = _state.asStateFlow()
 
+//    private val _recentResultsState = SnapshotStateList<MatchState>()
+//    val recentResultsState = _recentResultsState.as
+
     private var fixtureInsertionJob: Job? = null
     private var fixtureReadJob: Job? = null
 
     init {
-        fetchTrendingFixtures()
-        showRecentMatchesFromDB()
+        try {
+            fetchTrendingFixtures()
+            showRecentMatchesFromDB()
+        } catch (e: Exception) {
+            Log.d(TAG, "Init block: ${e.message}")
+        }
+
     }
 
     fun fetchTrendingFixtures() {
@@ -41,13 +49,31 @@ class FixtureViewModel @Inject constructor(
         fixtureReadJob?.cancel()
         fixtureReadJob = viewModelScope.launch(Dispatchers.IO) {
             fixtureUseCase.getRecentMatchesUseCase().collect {
+                for (match in it) {
+                    try {
+                        val matchResult = fixtureUseCase.getFixtureRunsUseCase(match.id)
+                        match.runs = matchResult.data.runs
+                    } catch (e: Exception) {
+                        Log.d(TAG, "showRecentMatchesFromDB: ${e.message}")
+                    }
+                }
                 _state.value = _state.value.copy(matchList = it)
                 Log.d(TAG, "showRecentMatchesFromDB: AM I WORKING???")
             }
         }
         Log.d(TAG, "showRecentMatchesFromDB: " + state.value.matchList.size)
-        Log.d(TAG, "showRecentMatchesFromDB: Retrieve from DB successful")
     }
+
+//    suspend fun fetchRunsByFixtureId(fixtureId: Int): FixtureWithRun {
+//        val matchState = MutableStateFlow(MatchState())
+//        fixtureReadJob?.cancel()
+//        fixtureReadJob = viewModelScope.launch(Dispatchers.IO) {
+////            fixtureUseCase.getFixtureRunsUseCase(fixtureId).collect{
+////                matchState.value = matchState.value.copy(fixtureWithRun = it)
+////            }
+//        }
+//        return matchState
+//    }
 
 
 }
